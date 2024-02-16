@@ -6,7 +6,8 @@ from src.Automate_Fuctionalities.Login import login_account_chrome
 from src.resources.Element_Location.URLs_of_Website import cart_page_url
 from src.utils.Read_Data import read_data_of_cell
 
-#When no Product Added
+
+#1.When no Product Added
 def cart_button_no_product_add():
     username = read_data_of_cell(
         'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 2)
@@ -18,25 +19,25 @@ def cart_button_no_product_add():
         time.sleep(5)
         if pro_page.current_url == cart_page_url():
             print(cart_page_url())
-            return True
-        else:
             return False
+        else:
+            return True
 
     except ValueError:
         print("Element Not Found")
 
-# Product are added
+#2.Product are added
 def cart_button_product_add():
     username = read_data_of_cell(
         'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 2)
     password = read_data_of_cell(
         'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 3)
     pro_page = login_account_chrome(username=username, password=password)
+    items_to_add = pro_page.find_elements(By.XPATH, Product_Page.add_to_cart_button_xpath())
     try:
         for i in (1,4):
-            pro_page.find_element(By.XPATH,Product_Page.add_to_cart_button_xpath(i)).click()
-
-        pro_page.find_element(By.CLASS_NAME, Product_Page.cart_symbol_class()).click()
+            items_to_add[i].click()
+        pro_page.find_element(By.CLASS_NAME,Product_Page.cart_symbol_class()).click()
         if pro_page.current_url == cart_page_url():
             return True
         else:
@@ -45,7 +46,7 @@ def cart_button_product_add():
     except ValueError:
         print("Element Not Found")
 
-#Add all the products availlable
+#3.Add all the products availlable
 def cart_button_product_all_add():
     username = read_data_of_cell(
         'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 2)
@@ -53,9 +54,9 @@ def cart_button_product_all_add():
         'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 3)
     pro_page = login_account_chrome(username=username, password=password)
     try:
-        for i in range(1,7):
-            pro_page.find_element(By.XPATH,Product_Page.add_to_cart_button_xpath(i)).click()
-
+        items_to_add = pro_page.find_elements(By.XPATH, Product_Page.add_to_cart_button_xpath())
+        for i in range(len(items_to_add)):
+            items_to_add[i].click()
         pro_page.find_element(By.CLASS_NAME, Product_Page.cart_symbol_class()).click()
         if pro_page.current_url == cart_page_url():
             return True
@@ -65,7 +66,7 @@ def cart_button_product_all_add():
     except ValueError:
         print("Element Not Found")
 
-#Remove some of added products
+#4.Remove some of added products
 def cart_button_product_add_remove_some():
     username = read_data_of_cell(
         'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 2)
@@ -73,10 +74,12 @@ def cart_button_product_add_remove_some():
         'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 3)
     pro_page = login_account_chrome(username=username, password=password)
     try:
+        items_to_add = pro_page.find_elements(By.XPATH, Product_Page.add_to_cart_button_xpath())
         for i in (1,3,4,2):
-            pro_page.find_element(By.XPATH,Product_Page.add_to_cart_button_xpath(i=i)).click()
-        for i in (3,2):
-            pro_page.find_element(By.XPATH,Product_Page.add_to_cart_button_xpath(i=i)).click()
+            items_to_add[i].click()
+        items_to_remove=pro_page.find_elements(By.XPATH,Product_Page.remove_from_cart_button_xpath())
+        for i in (1,3):
+            items_to_remove[i].click()
         pro_page.find_element(By.CLASS_NAME, Product_Page.cart_symbol_class()).click()
         if pro_page.current_url == cart_page_url():
             return True
@@ -86,7 +89,7 @@ def cart_button_product_add_remove_some():
     except ValueError:
         print("Element Not Found")
 
-#Remove all selected items selected
+#5.Remove all selected items selected
 def cart_button_product_add_remove_all():
     username = read_data_of_cell(
         'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 2)
@@ -94,10 +97,12 @@ def cart_button_product_add_remove_all():
         'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 3)
     pro_page = login_account_chrome(username=username, password=password)
     try:
-        for i in (1,3,4,2):
-            pro_page.find_element(By.XPATH,Product_Page.add_to_cart_button_xpath(i=i)).click()
-        for i in (1,3,2,4):
-            pro_page.find_element(By.XPATH,Product_Page.add_to_cart_button_xpath(i=i)).click()
+        items_to_add = pro_page.find_elements(By.XPATH, Product_Page.add_to_cart_button_xpath())
+        for i in (1, 3, 4, 2):
+            items_to_add[i].click()
+        items_to_remove = pro_page.find_elements(By.XPATH, Product_Page.remove_from_cart_button_xpath())
+        for i in range(len(items_to_remove)):
+            items_to_remove[i].click()
         pro_page.find_element(By.CLASS_NAME, Product_Page.cart_symbol_class()).click()
         if pro_page.current_url == cart_page_url():
             return True
@@ -107,23 +112,27 @@ def cart_button_product_add_remove_all():
     except ValueError:
         print("Element Not Found")
 
-#Add all products availlable and then remove them all
-    def cart_button_product_add_all_remove_all():
-        username = read_data_of_cell(
+#6.Add all products available and then remove them all
+def cart_button_product_add_all_remove_all():
+    username = read_data_of_cell(
             'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 2)
-        password = read_data_of_cell(
+    password = read_data_of_cell(
             'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 3)
-        pro_page = login_account_chrome(username=username, password=password)
-        try:
-            for i in range(1,7):
-                pro_page.find_element(By.XPATH, Product_Page.add_to_cart_button_xpath(i=i)).click()
-            for i in range(1,7):
-                pro_page.find_element(By.XPATH, Product_Page.add_to_cart_button_xpath(i=i)).click()
-            pro_page.find_element(By.CLASS_NAME, Product_Page.cart_symbol_class()).click()
-            if pro_page.current_url == cart_page_url():
-                return True
-            else:
-                return False
+    pro_page = login_account_chrome(username=username, password=password)
+    try:
+        items_to_add = pro_page.find_elements(By.XPATH, Product_Page.add_to_cart_button_xpath())
+        for i in range(len(items_to_add)):
+            items_to_add[i].click()
+        items_to_remove = pro_page.find_elements(By.XPATH, Product_Page.remove_from_cart_button_xpath())
+        for i in range(len(items_to_remove)):
+            items_to_remove[i].click()
+        pro_page.find_element(By.CLASS_NAME, Product_Page.cart_symbol_class()).click()
+        if pro_page.current_url == cart_page_url():
+            return True
+        else:
+            return False
 
-        except ValueError:
+    except ValueError:
             print("Element Not Found")
+
+

@@ -16,13 +16,19 @@ class Product_Page:
     def filter_button_class():
         return "product_sort_container"
 
-    #Add to cart button any
-    def add_to_cart_button_xpath(self,i):
-        return f"/html/body/div[1]/div/div/div[2]/div/div/div/div[{i}]/div[2]/div[2]/button"
+    # Add to cart button any
+    @staticmethod
+    def add_to_cart_button_xpath():
+        return "//button[contains(text(),'Add to cart')]"
+
+    #Remove Item from cart
+    @staticmethod
+    def remove_from_cart_button_xpath():
+        return "//button[contains(text(),'Remove')]"
 
     #Card of the item
     def card_of_the_item(self,i):
-        return f"/html/body/div[1]/div/div/div[2]/div/div/div/div[{i}]/div[1]/a/img"
+        return "//img[@class='inventory_item_img']"
 
 class Side_menu:
         # Cross button
