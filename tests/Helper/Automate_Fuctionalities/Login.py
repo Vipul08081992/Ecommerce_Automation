@@ -1,7 +1,9 @@
 from selenium import webdriver
-from src.resources.Element_Location.Login_page import username_id,passsword_id,submit_id
-from src.resources.Element_Location.URLs_of_Website import login_page_url,product_page_url
-import time
+from tests.resourses.Element_Location.Login_page import username_id,passsword_id,submit_id
+from tests.resourses.Element_Location.URLs_of_Website import login_page_url,product_page_url
+from tests.resourses.Element_Location.Product_List_page import Product_Page
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 #Login
 def login_using_chrome(username,password):
@@ -12,7 +14,8 @@ def login_using_chrome(username,password):
         driver.find_element(By.ID,username_id()).send_keys(username)
         driver.find_element(By.ID,passsword_id()).send_keys(password)
         driver.find_element(By.ID,submit_id()).click()
-        time.sleep(5)
+        WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.XPATH,Product_Page.heading_prodouct())))
         if driver.current_url == product_page_url():
             return True
         else:
@@ -21,15 +24,7 @@ def login_using_chrome(username,password):
         print("Element Not Found")
 
 
-def login_account_chrome(username,password):
-    driver=webdriver.Chrome()
-    driver.get(login_page_url())
-    driver.maximize_window()
-    driver.find_element(By.ID,username_id()).send_keys(username)
-    driver.find_element(By.ID,passsword_id()).send_keys(password)
-    driver.find_element(By.ID,submit_id()).click()
-    time.sleep(5)
-    return driver
+
 
 
 

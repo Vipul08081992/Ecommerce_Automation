@@ -1,6 +1,11 @@
 
 class Product_Page:
 
+    #Product Heading
+    @staticmethod
+    def heading_prodouct():
+        return "//div[@class='aap_logo']"
+
     #Cart Symbol
     @staticmethod
     def cart_symbol_class():
@@ -55,4 +60,26 @@ class Side_menu:
     @staticmethod
     def reset_app_state_id():
         return "reset_sidebar_link"
+
+class Filter:
+    #Name (A to Z) option
+    @staticmethod
+    def name_AtoZ_css():
+        return "option[value*='az']"
+
+    #Name (Z to A) option
+    @staticmethod
+    def name_ZtoA_css():
+        return "option[value*='za']"
+
+    #Price (low to high)option
+    @staticmethod
+    def price_ltoh_css():
+        return "option[value*='lohi']"
+
+    # Price (high to low)option
+    @staticmethod
+    def price_htot_css():
+        return "option[value*='hilo']"
+
 
