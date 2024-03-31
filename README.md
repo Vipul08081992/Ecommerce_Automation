@@ -14,7 +14,7 @@ I have used the following automation tools and frameworks for testing the Swag L
 * **Page Object Model (POM):** A design pattern for creating reusable and maintainable automation tests by separating page-specific actions and elements into separate classes.
 
 ## Setup Instructions:
-1. Clone the automation testing project repository from [GitHub URL].
+1. Clone the automation testing project repository from [https://github.com/Vipul08081992/Ecommerce_Automation.git].
 2. Ensure that Python is installed on your system (version X.X or higher).
 3. Install the required Python dependencies using pip: pip install -r requirements.txt.
 4. Set up the PyTest configurations and specify the test environment details (e.g., base URL).
