@@ -1,22 +1,14 @@
 import pytest
-from tests.Helper.Automate_Fuctionalities.Login import login_using_chrome
-from tests.utils.Read_Data import read_data_of_row, read_data_of_cell
+from tests.Helper.Automate_Fuctionalities.Login_functionality import  login_button_click
+from tests.resourses.Element_Location.URLs_of_Website import product_page_url
+from tests.Helper.Generic_functions.Read_Data import read_data_of_row
 
 
-#Test1:Verify with valid Login credentials
-@pytest.mark.positive
-def test_valid_credentials_chrome():
-    username = read_data_of_cell(
-        'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 2)
-    password = read_data_of_cell(
-        'C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\src\\resources\\Data\\Valid Credentials.xlsx', 2, 3)
-    assert login_using_chrome(username=username,password=password)== True
-
-
-#Test: Verify with invalid input
-@pytest.mark.negative
+#Test: Verify login functionality
 @pytest.mark.parametrize("test_cred",read_data_of_row("C:\\Users\\vipul\\PycharmProjects\\Swag_Labs\\tests\\resourses\\Data\\Valid Credentials.xlsx"))
 def test_valid_credentials_chrome(test_cred):
     username=test_cred["username"]
     password=test_cred["password"]
-    assert login_using_chrome(username=username,password=password)== False
+    output_list=login_button_click(username, password)
+    assert output_list[0] == product_page_url()
+    output_list[1].quit()
